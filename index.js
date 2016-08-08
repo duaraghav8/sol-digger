@@ -6,12 +6,12 @@
 'use strict';
 
 var path = require ('path'),
-	fs = require ('fs');
+	fs = require ('fs'),
+	SOL_EXT = '.sol';
 
 function traverse (currentDir, allFiles, ignore) {
 
 	var currentDirItems;
-	var SOL_EXT = '.sol';
 
 	if (!path.isAbsolute (currentDir)) {
 		currentDir = path.join (process.cwd (), currentDir);
