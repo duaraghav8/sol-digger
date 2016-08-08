@@ -46,7 +46,7 @@ module.exports = function dig (dir, ignore) {
 	ignore = (
 		ignore && typeof ignore === 'object' && ignore.constructor.name === 'Array'
 	) ? ignore : (
-			typeof ignore === 'string' ? ignore : undefined
+			typeof ignore === 'string' ? [ignore] : undefined
 		);
 
 	dir && typeof dir === 'string' && traverse (dir, allFiles, ignore);
