@@ -42,9 +42,12 @@ function traverse (currentDir, allFiles, ignore) {
 module.exports = function dig (dir, ignore) {
 	var allFiles = [];
 
+	//set ignore to undefined if its not either a string or array
 	ignore = (
 		ignore && typeof ignore === 'object' && ignore.constructor.name === 'Array'
-	) ? ignore : undefined;
+	) ? ignore : (
+			typeof ignore === 'string' ? ignore : undefined
+		);
 
 	dir && typeof dir === 'string' && traverse (dir, allFiles, ignore);
 	
