@@ -6,15 +6,16 @@
 'use strict';
 
 var path = require ('path'),
-	fs = require ('fs'),
-	SOL_EXT = '.sol';
+	fs = require ('fs');
+var SOL_EXT = '.sol',
+	CWD = process.cwd ();
 
 function traverse (currentDir, allFiles, ignore) {
 
 	var currentDirItems;
 
 	if (!path.isAbsolute (currentDir)) {
-		currentDir = path.join (process.cwd (), currentDir);
+		currentDir = path.join (CWD, currentDir);
 	}
 
 	currentDirItems = fs.readdirSync (currentDir);
@@ -41,6 +42,11 @@ function traverse (currentDir, allFiles, ignore) {
 module.exports = function dig (dir, ignore) {
 	var allFiles = [];
 
-	traverse (dir, allFiles, ignore);
+	ignore = (
+		ignore && typeof ignore === 'object' && ignore.constructor.name === 'Array'
+	) ? ignore : undefined;
+
+	dir && typeof dir === 'string' && traverse (dir, allFiles, ignore);
+	
 	return allFiles;
 };
