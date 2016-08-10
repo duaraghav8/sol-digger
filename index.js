@@ -23,7 +23,7 @@ function traverse (currentDir, allFiles, ignore) {
 	currentDirItems.forEach (function (item) {
 		var absoluteItemPath = path.join (currentDir, item);
 
-		if (ignore && ignore.indexOf (item) > -1) {
+		if (ignore.indexOf (absoluteItemPath) > -1) {
 			return;
 		}
 
@@ -44,12 +44,20 @@ module.exports = function dig (dir, ignore) {
 
 	//set ignore to undefined if its not either a string or array
 	ignore = (
-		ignore && typeof ignore === 'object' && ignore.constructor.name === 'Array'
+		typeof ignore === 'object' && ignore.constructor.name === 'Array'
 	) ? ignore : (
-			typeof ignore === 'string' ? [ignore] : undefined
+			typeof ignore === 'string' ? [ignore] : []
 		);
 
-	dir && typeof dir === 'string' && traverse (dir, allFiles, ignore);
+	for (var i = 0; i < ignore.length; i++) {
+		if (!path.isAbsolute (ignore [i])) {
+			ignore [i] = path.join (CWD, ignore [i]);
+		}
+	}
+
+	if (dir && typeof dir === 'string' && fs.lstatSync (dir).isDirectory ()) {
+		traverse (dir, allFiles, ignore);
+	}
 	
 	return allFiles;
 };
