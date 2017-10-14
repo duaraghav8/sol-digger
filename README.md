@@ -1,12 +1,12 @@
 # sol-digger
 Recursively traverse a directory to extract all Solidity files
 
-#Install
+## Install
 ```
 npm install sol-digger
 ```
 
-#API
+## API
 ```js
 let digger = require ('sol-digger');
 ```
@@ -15,7 +15,7 @@ let digger = require ('sol-digger');
 If you wish to pass only a single file or directory to ignore, you can simply pass in a string instead of array to ```digger ()```.
 
 
-#Usage
+## Usage
 ```js
 'use strict';
 
